@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "pre-commit": "echo '***********\nEnsure to follow Conventional Commits specification.\nRefer to https://github.com/conventional-changelog/commitlint/#what-is-commitlint for more details.\n**********'",
+    "commit-msg": "npx commitlint -E HUSKY_GIT_PARAMS",
+    "pre-push": "npx validate-branch-name"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "node-eurecia",
+  "version": "1.0.0",
+  "description": "Node wrapper for the Eurecia API",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha *.test.js --exit",
+    "prepare": "husky",
+    "lint": "eslint --fix '*.js' --ignore-path .gitignore",
+    "lint:report": "eslint --output-file eslint_report.json --format json src",
+    "todo": "leasot -x '*.js'",
+    "test-ci": "nyc --check-coverage --lines 85 --statements 80 -t coverage npm test"
+  },
+  "author": "Matthieu Bargheon",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.8"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^19.1.0",
+    "assert": "^2.1.0",
+    "commitlint": "^19.2.1",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "leasot": "^13.3.0",
+    "mocha": "^10.4.0",
+    "nock": "^13.5.4",
+    "nyc": "^15.1.0",
+    "prettier": "^3.2.5"
+  },
+  "engines": {
+    "node": "20.10.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Epitech-ops/node-eurecia.git"
+  },
+  "keywords": [
+    "eurecia",
+    "node",
+    "nodejs",
+    "javascript",
+    "wrapper"
+  ],
+  "bugs": {
+    "url": "https://github.com/Epitech-ops/node-eurecia/issues"
+  },
+  "homepage": "https://github.com/Epitech-ops/node-eurecia#readme",
+  "validate-branch-name": {
+    "pattern": "^(main|release|develop){1}$|^(feature|bugfix|improvement|library|hotfix|refactoring)/[a-z0-9._-]+$",
+    "errorMsg": "Branches must be \"main|release|develop\", or be prefixed by \"feature|bugfix|improvement|library|hotfix|refactoring\""
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
+}
