@@ -4,11 +4,11 @@ Node wrapper for the Eurecia API
 
 ## Installation
 
-`npm install bamboohr --save`
+`npm install node-eurecia --save`
 
 ## Usage
 
-```
+```javascript
 const eurecia = require('node-eurecia');
 
 async function main() {
