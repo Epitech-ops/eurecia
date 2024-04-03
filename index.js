@@ -43,9 +43,28 @@ class Eurecia {
     return response.data;
   }
 
-  async getCompanies() {
-    const response = await this.query('get', `/v4/companies`);
-    return response.data;
+  async getCompanies(page = 0) {
+    const response = await this.query('get', `/v4/companies?page=${page}`);
+    return response;
+  }
+
+  async getAllCompanies() {
+    const companies = [];
+    let page = 0;
+    const promises = [];
+    promises.push(await this.getCompanies(page));
+    page += 1;
+    while (page < promises[0].totalPages) {
+      promises.push(this.getCompanies(page));
+      page += 1;
+    }
+    const responses = await Promise.all(promises);
+    responses.forEach((res) => {
+      res.content.forEach((company) => {
+        companies.push(company);
+      });
+    });
+    return companies;
   }
 
   async getEmployees(page = 0, active = true) {
@@ -82,12 +101,12 @@ class Eurecia {
 
   async getDepartments() {
     const response = await this.query('get', `/v4/departments`);
-    return response;
+    return response.nodes;
   }
 
   async getStructures() {
     const response = await this.query('get', `/v4/structures`);
-    return response;
+    return response.nodes;
   }
 
   async getPayrollGrids() {

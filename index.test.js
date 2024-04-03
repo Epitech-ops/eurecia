@@ -95,13 +95,39 @@ describe('Eurecia', () => {
         data: ['company1', 'company2'],
       };
       const scope = nock(baseUrl)
-        .get('/eurecia/rest/v4/companies')
+        .get('/eurecia/rest/v4/companies?page=0')
         .matchHeader('Accept', 'application/json')
         .matchHeader('token', 'temporary-token')
         .reply(200, response);
       const companies = await eurecia.getCompanies();
-      assert.deepStrictEqual(companies, response.data);
+      assert.deepStrictEqual(companies, response);
       scope.done();
+    });
+  });
+
+  describe('getAllCompanies', () => {
+    it('should return all the companies', async () => {
+      const response1 = {
+        content: ['company1', 'company2'],
+        totalPages: 2,
+      };
+      const response2 = {
+        content: ['company3', 'company4'],
+      };
+      const scope1 = nock(baseUrl)
+        .get('/eurecia/rest/v4/companies?page=0')
+        .matchHeader('Accept', 'application/json')
+        .matchHeader('token', 'temporary-token')
+        .reply(200, response1);
+      const scope2 = nock(baseUrl)
+        .get('/eurecia/rest/v4/companies?page=1')
+        .matchHeader('Accept', 'application/json')
+        .matchHeader('token', 'temporary-token')
+        .reply(200, response2);
+      const companies = await eurecia.getAllCompanies();
+      assert.deepStrictEqual(companies, ['company1', 'company2', 'company3', 'company4']);
+      scope1.done();
+      scope2.done();
     });
   });
 
@@ -166,7 +192,7 @@ describe('Eurecia', () => {
   describe('getDepartments', () => {
     it('should return the departments', async () => {
       const response = {
-        data: ['department1', 'department2'],
+        nodes: ['department1', 'department2'],
       };
       const scope = nock(baseUrl)
         .get('/eurecia/rest/v4/departments')
@@ -174,7 +200,7 @@ describe('Eurecia', () => {
         .matchHeader('token', 'temporary-token')
         .reply(200, response);
       const departments = await eurecia.getDepartments();
-      assert.deepStrictEqual(departments, response);
+      assert.deepStrictEqual(departments, response.nodes);
       scope.done();
     });
   });
@@ -182,7 +208,7 @@ describe('Eurecia', () => {
   describe('getStructures', () => {
     it('should return the structures', async () => {
       const response = {
-        data: ['structure1', 'structure2'],
+        nodes: ['structure1', 'structure2'],
       };
       const scope = nock(baseUrl)
         .get('/eurecia/rest/v4/structures')
@@ -190,7 +216,7 @@ describe('Eurecia', () => {
         .matchHeader('token', 'temporary-token')
         .reply(200, response);
       const structures = await eurecia.getStructures();
-      assert.deepStrictEqual(structures, response);
+      assert.deepStrictEqual(structures, response.nodes);
       scope.done();
     });
   });
