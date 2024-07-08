@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "./lib",
+    "rootDir": "./src",
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": false
+  },
+  "include": ["./src/**/*"],
+  "exclude": [
+    ".git",
+    ".gihtub",
+    "node_modules",
+    ".husky",
+    "coverage",
+    "*.js"
+  ]
+}

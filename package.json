@@ -1,34 +1,47 @@
 {
   "name": "node-eurecia",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Node wrapper for the Eurecia API",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
-    "test": "mocha *.test.js --exit",
+    "compile": "tsc --declaration --declarationMap --sourceMap",
+    "clean": "rm -rf lib node-eurecia-*.tgz",
+    "start": "ts-node index.ts",
+    "test": "mocha",
     "prepare": "husky",
-    "lint": "eslint --fix '*.js' --ignore-path .gitignore",
-    "lint:report": "eslint --output-file eslint_report.json --format json src",
-    "todo": "leasot -x '*.js'",
-    "test-ci": "nyc --check-coverage --lines 85 --statements 80 -t coverage npm test"
+    "lint": "eslint --fix 'src/*.ts' 'src/**/*.ts' --ignore-path .gitignore",
+    "todo": "leasot -x 'src/*.ts'",
+    "test-ci": "nyc --check-coverage --lines 85 --statements 80 -t coverage npm test",
+    "build": "npx babel src --out-dir lib --extensions .ts,.tsx,.js --ignore **/*.test.ts,**/*.test.tsx"
   },
   "author": "Matthieu Bargheon",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.6.8"
+    "axios": "^1.7.2"
   },
   "devDependencies": {
-    "@commitlint/config-conventional": "^19.1.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "@types/mocha": "^10.0.7",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
     "assert": "^2.1.0",
-    "commitlint": "^19.2.1",
+    "commitlint": "^19.3.0",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.0.11",
     "leasot": "^13.3.0",
-    "mocha": "^10.4.0",
+    "mocha": "^10.6.0",
     "nock": "^13.5.4",
     "nyc": "^15.1.0",
-    "prettier": "^3.2.5"
+    "prettier": "^3.3.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.3"
   },
   "engines": {
     "node": "20.10.0"
@@ -53,7 +66,7 @@
     "errorMsg": "Branches must be \"main|release|develop\", or be prefixed by \"feature|bugfix|improvement|library|hotfix|refactoring\""
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
+    "*.{ts,js}": "eslint --cache --fix",
+    "*.{ts,js,css,md}": "prettier --write"
   }
 }
